@@ -1,0 +1,159 @@
+/**
+ * Estilos do Formulário de Produto
+ */
+
+.formulario-produto {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.formulario-produto h2 {
+  margin: 0 0 24px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.grupo-form {
+  margin-bottom: 16px;
+}
+
+.grupo-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.grupo-form input[type='text'],
+.grupo-form input[type='number'],
+.grupo-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.grupo-form input[type='text']:focus,
+.grupo-form input[type='number']:focus,
+.grupo-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.grupo-form textarea {
+  resize: vertical;
+}
+
+.grupo-form-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.grupo-form-checkbox {
+  margin-bottom: 16px;
+}
+
+.grupo-form-checkbox label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+}
+
+.grupo-form-checkbox input[type='checkbox'] {
+  margin-right: 8px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.grupo-botoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-salvar,
+.btn-limpar {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-salvar {
+  background-color: #28a745;
+  color: white;
+  flex: 1;
+}
+
+.btn-salvar:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-limpar {
+  background-color: #6c757d;
+  color: white;
+  min-width: 100px;
+}
+
+.btn-limpar:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-limpar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mensagem-erro,
+.mensagem-sucesso {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.mensagem-erro {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.mensagem-sucesso {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+@media (max-width: 768px) {
+  .grupo-form-linha {
+    grid-template-columns: 1fr;
+  }
+
+  .grupo-botoes {
+    flex-direction: column;
+  }
+
+  .btn-limpar {
+    width: 100%;
+  }
+}

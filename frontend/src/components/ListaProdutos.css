@@ -1,0 +1,142 @@
+/**
+ * Estilos da Lista de Produtos
+ */
+
+.lista-produtos {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+}
+
+.lista-produtos h2 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.mensagem-vazia {
+  text-align: center;
+  color: #999;
+  padding: 32px 0;
+  font-size: 14px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.tabela-responsiva {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+.tabela-produtos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela-produtos thead {
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+}
+
+.tabela-produtos th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+.tabela-produtos tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.tabela-produtos tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.tabela-produtos td {
+  padding: 12px;
+  color: #666;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.ativo {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge.inativo {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-editar,
+.btn-remover {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar:hover {
+  opacity: 0.9;
+}
+
+.btn-remover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-remover:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .tabela-produtos {
+    font-size: 12px;
+  }
+
+  .tabela-produtos th,
+  .tabela-produtos td {
+    padding: 8px;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .btn-editar,
+  .btn-remover {
+    width: 100%;
+  }
+}
