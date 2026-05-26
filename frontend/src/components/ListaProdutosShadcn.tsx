@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from './ui/dialog';
-import { AlertCircle, CheckCircle2, Edit2, Loader2, Trash2 } from 'lucide-react';
+import { AlertCircle, Edit2, Loader2, Trash2 } from 'lucide-react';
 
 interface ListaProdutosProps {
   atualizarLista: boolean;

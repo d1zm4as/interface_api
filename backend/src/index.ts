@@ -6,6 +6,11 @@
 import express from 'express';
 import cors from 'cors';
 import rotasProdutos from './routes/produtos';
+import {
+  adicionarHeadersSeguranca,
+  middlewareLog,
+  validarContentType,
+} from './middlewares/validacao';
 
 const app = express();
 const PORTA = process.env.PORT || 3001;
@@ -13,6 +18,9 @@ const PORTA = process.env.PORT || 3001;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(adicionarHeadersSeguranca);
+app.use(middlewareLog);
+app.use(validarContentType);
 
 // Rota de health check
 app.get('/health', (req, res) => {

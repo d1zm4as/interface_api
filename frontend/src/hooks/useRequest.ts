@@ -49,11 +49,10 @@ export const useRequest = (): UseRequestReturn => {
       setEstado({ carregando: false, erro: null, sucesso: true });
       
       // Remove mensagem de sucesso após 3 segundos
-      const timer = setTimeout(() => {
+      setTimeout(() => {
         setEstado(prev => ({ ...prev, sucesso: false }));
       }, 3000);
 
-      return () => clearTimeout(timer);
       return resultado;
     } catch (erro) {
       const mensagem = erro instanceof Error ? erro.message : 'Erro desconhecido';

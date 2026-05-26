@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import './Modal.css';
+import './ModalConfirmacao.css';
 
 interface ModalConfirmacaoProps {
   titulo: string;

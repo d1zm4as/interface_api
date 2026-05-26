@@ -1,0 +1,14 @@
+# Docker ignore para backend
+node_modules
+dist
+.env
+.env.local
+npm-debug.log
+.DS_Store
+.git
+.gitignore
+README.md
+src
+tsconfig.json
+package.json
+package-lock.json

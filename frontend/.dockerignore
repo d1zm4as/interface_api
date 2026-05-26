@@ -1,0 +1,17 @@
+# Docker ignore para frontend
+node_modules
+build
+.env
+.env.local
+npm-debug.log
+.DS_Store
+.git
+.gitignore
+README.md
+src
+public
+tsconfig.json
+package.json
+package-lock.json
+.eslintignore
+.eslintrc.json
