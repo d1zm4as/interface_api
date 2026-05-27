@@ -510,24 +510,5 @@ Desenvolvido como projeto de full-stack com tecnologias modernas.
 
 ---
 
-**Última atualização:** 2024
-**Status:** ✅ Production Ready
 
-4. **Testes**
-   - Testes unitários com Jest
-   - Testes de integração
-   - Testes E2E com Cypress
-
-5. **Melhorias na Interface**
-   - Paginação na listagem
-   - Filtros e busca
-   - Exportação de dados (CSV, PDF)
-   - Dashboard com estatísticas
-
-## 📞 Contato
-
-Para dúvidas sobre o projeto, entre em contato.
-
----
-
-**Desenvolvido em 2024** - Desafio Técnico Full Stack Júnior
+**Desenvolvido em 2026** - Desafio Técnico Full Stack Júnior
