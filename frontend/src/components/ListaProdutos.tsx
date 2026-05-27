@@ -28,8 +28,8 @@ export const ListaProdutos: React.FC<ListaProdutosProps> = ({
     setCarregando(true);
     setErro(null);
     try {
-      const dados = await listarProdutos();
-      setProdutos(dados);
+      const resposta = await listarProdutos();
+      setProdutos(resposta.dados);
     } catch (erro) {
       setErro('Erro ao carregar produtos. Tente novamente.');
       console.error(erro);

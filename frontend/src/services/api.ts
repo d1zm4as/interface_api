@@ -15,13 +15,46 @@ const api = axios.create({
   },
 });
 
+export interface ListarProdutosParams {
+  pagina?: number;
+  porPagina?: number;
+  busca?: string;
+  categoria?: string;
+  precoMin?: number;
+  precoMax?: number;
+  ativo?: boolean;
+  sortBy?: 'name' | 'price' | 'category' | 'active' | 'createdAt' | 'updatedAt';
+  sortDirection?: 'asc' | 'desc';
+}
+
+export interface PaginacaoProdutosResposta {
+  paginaAtual: number;
+  porPagina: number;
+  total: number;
+  totalPaginas: number;
+  temProxima: boolean;
+  temAnterior: boolean;
+}
+
+export interface ListagemProdutosResposta {
+  dados: Produto[];
+  total: number;
+  paginacao: PaginacaoProdutosResposta | null;
+}
+
 /**
  * Lista todos os produtos
  */
-export const listarProdutos = async (): Promise<Produto[]> => {
+export const listarProdutos = async (
+  filtros?: ListarProdutosParams
+): Promise<ListagemProdutosResposta> => {
   try {
-    const response = await api.get('/');
-    return response.data.dados || [];
+    const response = await api.get('/', { params: filtros });
+    return {
+      dados: response.data.dados || [],
+      total: response.data.total || 0,
+      paginacao: response.data.paginacao || null,
+    };
   } catch (erro) {
     console.error('Erro ao listar produtos:', erro);
     throw erro;

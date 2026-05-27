@@ -66,6 +66,9 @@ fi
 log_info "Instalando dependências..."
 npm install
 
+log_info "Gerando Prisma Client..."
+npm run prisma:generate
+
 log_info "Compilando TypeScript..."
 npm run build
 

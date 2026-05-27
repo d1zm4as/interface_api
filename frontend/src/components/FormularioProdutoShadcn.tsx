@@ -38,7 +38,7 @@ export const FormularioProduto: React.FC<FormularioProdutoProps> = ({
 
   useEffect(() => {
     if (produtoParaEditar) {
-      const { id, createdAt, ...dados } = produtoParaEditar;
+      const { id, createdAt, updatedAt, ...dados } = produtoParaEditar;
       setFormData(dados);
     } else {
       limparFormulario();

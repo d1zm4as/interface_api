@@ -8,6 +8,8 @@ Aplicação full-stack moderna para gerenciamento de produtos com backend em Nod
 - **Node.js 18+** - Runtime JavaScript
 - **Express.js 4.18** - Framework web
 - **TypeScript 5.0** - Tipagem estática
+- **PostgreSQL** - Banco de dados relacional
+- **Prisma ORM** - Camada de acesso ao banco
 - **Jest** - Framework de testes
 - **Zod** - Schema validation
 - **Docker** - Containerização
@@ -42,11 +44,12 @@ cd frontend && npm start
 ### Opção 2: Docker Compose
 
 ```bash
-docker-compose up
+docker-compose up --build -d
 ```
 
 Frontend: http://localhost:3000
 Backend: http://localhost:3001
+Banco: PostgreSQL na porta 5432
 
 ### Opção 3: Manual
 
@@ -69,6 +72,7 @@ npm start
 
 ### Pré-requisitos
 - Node.js 18+ ([instalar](https://nodejs.org/))
+- PostgreSQL 16+ ou Docker
 - Docker (opcional, para containerização)
 
 ### Backend
@@ -78,6 +82,15 @@ cd backend
 
 # Instalar dependências
 npm install
+
+# Configurar o ambiente
+cp .env.example .env
+
+# Gerar o Prisma Client
+npm run prisma:generate
+
+# Aplicar as migrações
+npm run prisma:deploy
 
 # Compilar TypeScript
 npm run build
@@ -119,12 +132,16 @@ Após iniciar:
 | Frontend | http://localhost:3000 | Interface web |
 | API Backend | http://localhost:3001 | Servidor API |
 | Health Check | http://localhost:3001/health | Status do backend |
-| Produtos | http://localhost:3001/produtos | Endpoint de produtos |
+| Produtos | http://localhost:3001/produtos | Endpoint principal de produtos |
+| Produtos (alias) | http://localhost:3001/products | Alias em inglês para o mesmo endpoint |
+| PostgreSQL | localhost:5432 | Banco de dados |
 
 ## 📡 API Endpoints
 
 ### GET /produtos
-Lista todos os produtos com paginação e filtros.
+Lista produtos com filtros opcionais e paginação quando `pagina` ou `porPagina` são informados.
+
+> O mesmo conjunto de rotas também está disponível em `/products` para aderir ao enunciado do desafio.
 
 **Query Parameters:**
 - `pagina` (default: 1)
@@ -134,6 +151,9 @@ Lista todos os produtos com paginação e filtros.
 - `precoMin` - Preço mínimo
 - `precoMax` - Preço máximo
 - `ativo` - Filtrar por status
+- `pagina` e `porPagina` - Ativam a paginação e retornam metadados em `paginacao`
+- `sortBy` - Campo de ordenação (`name`, `price`, `category`, `active`, `createdAt`, `updatedAt`)
+- `sortDirection` - Direção da ordenação (`asc` ou `desc`)
 
 **Exemplo:**
 ```bash
@@ -155,7 +175,9 @@ GET /produtos?pagina=1&busca=notebook&categoria=Eletrônicos
       "createdAt": "2024-05-25T10:30:00.000Z"
     }
   ],
-  "total": 1
+  "total": 1,
+  "paginacao": null,
+  "filtrosAplicados": {}
 }
 ```
 

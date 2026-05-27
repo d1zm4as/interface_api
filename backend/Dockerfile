@@ -1,31 +1,20 @@
-# Use official Node.js LTS image
 FROM node:18-alpine
 
-# Define diretório de trabalho
 WORKDIR /app
 
-# Copie package.json e package-lock.json
+# Instala dependências completas para gerar o Prisma Client e compilar o projeto
 COPY package*.json ./
+RUN npm ci
 
-# Instale dependências
-RUN npm ci --only=production
-
-# Copie código-fonte
+# Copia o restante do código e prepara o Prisma
 COPY . .
-
-# Compile TypeScript
+ENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/produtos_db?schema=public
+RUN npx prisma generate
 RUN npm run build
 
-# Exponha a porta
 EXPOSE 3001
 
-# Variáveis de ambiente
 ENV NODE_ENV=production
 ENV PORT=3001
 
-# Inicie a aplicação
-CMD ["npm", "start"]
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3001/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]

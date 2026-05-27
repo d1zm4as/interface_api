@@ -11,7 +11,8 @@ export interface Produto {
   category: string;
   active: boolean;
   createdAt: string;
+  updatedAt?: string;
 }
 
-export type CriarProduto = Omit<Produto, 'id' | 'createdAt'>;
+export type CriarProduto = Omit<Produto, 'id' | 'createdAt' | 'updatedAt'>;
 export type AtualizarProduto = Partial<CriarProduto>;

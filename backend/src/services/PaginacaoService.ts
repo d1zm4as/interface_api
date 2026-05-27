@@ -6,7 +6,7 @@
 import { Produto } from '../models/Produto';
 import { repositorioProdutos } from './ProdutoService';
 
-export interface OpcoesP aginacao {
+export interface OpcoesPaginacao {
   pagina: number;
   porPagina: number;
 }
@@ -28,7 +28,7 @@ export interface ResultadoPaginado<T> {
  */
 export function paginar<T>(
   itens: T[],
-  opcoes: OpcoesP aginacao
+  opcoes: OpcoesPaginacao
 ): ResultadoPaginado<T> {
   const { pagina, porPagina } = opcoes;
 
@@ -59,11 +59,19 @@ export function paginar<T>(
 /**
  * Obtém produtos paginados
  */
-export function obterProdutosPaginados(
-  opcoes: OpcoesP aginacao
-): ResultadoPaginado<Produto> {
-  const produtos = repositorioProdutos.listar();
-  return paginar(produtos, opcoes);
+export async function obterProdutosPaginados(
+  opcoes: OpcoesPaginacao
+): Promise<ResultadoPaginado<Produto>> {
+  const resultado = await repositorioProdutos.listarComConsulta(opcoes);
+
+  if (resultado.paginacao) {
+    return {
+      dados: resultado.produtos,
+      paginacao: resultado.paginacao,
+    };
+  }
+
+  return paginar(resultado.produtos, opcoes);
 }
 
 /**
@@ -72,7 +80,7 @@ export function obterProdutosPaginados(
 export function validarOpcoesPaginacao(
   pagina: any,
   porPagina: any
-): OpcoesP aginacao {
+): OpcoesPaginacao {
   const p = Math.max(1, parseInt(pagina) || 1);
   const pp = Math.max(1, Math.min(parseInt(porPagina) || 10, 100));
 

@@ -2,7 +2,7 @@
  * Testes da Service de Validação
  */
 
-import { validarCriacaoProduto, validarAtualizacaoProduto } from '../../services/ValidacaoService';
+import { validarCriacaoProduto, validarAtualizacaoProduto } from '../services/ValidacaoService';
 
 describe('ValidacaoService', () => {
   describe('validarCriacaoProduto', () => {

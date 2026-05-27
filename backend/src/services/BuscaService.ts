@@ -23,41 +23,12 @@ export interface ResultadoBusca {
 /**
  * Busca e filtra produtos
  */
-export function buscarProdutos(filtros: FiltrosProduto): ResultadoBusca {
-  let produtos = repositorioProdutos.listar();
-
-  // Filtro por busca (nome ou descrição)
-  if (filtros.busca) {
-    const termo = filtros.busca.toLowerCase();
-    produtos = produtos.filter(
-      p =>
-        p.name.toLowerCase().includes(termo) ||
-        p.description.toLowerCase().includes(termo)
-    );
-  }
-
-  // Filtro por categoria
-  if (filtros.categoria) {
-    produtos = produtos.filter(p => p.category === filtros.categoria);
-  }
-
-  // Filtro por faixa de preço
-  if (filtros.precoMin !== undefined) {
-    produtos = produtos.filter(p => p.price >= filtros.precoMin!);
-  }
-
-  if (filtros.precoMax !== undefined) {
-    produtos = produtos.filter(p => p.price <= filtros.precoMax!);
-  }
-
-  // Filtro por status ativo
-  if (filtros.ativo !== undefined) {
-    produtos = produtos.filter(p => p.active === filtros.ativo);
-  }
+export async function buscarProdutos(filtros: FiltrosProduto): Promise<ResultadoBusca> {
+  const resultado = await repositorioProdutos.listarComConsulta(filtros);
 
   return {
-    produtos,
-    total: produtos.length,
+    produtos: resultado.produtos,
+    total: resultado.total,
     filtrosAplicados: filtros,
   };
 }
@@ -65,8 +36,8 @@ export function buscarProdutos(filtros: FiltrosProduto): ResultadoBusca {
 /**
  * Obtém categorias únicas
  */
-export function obterCategorias(): string[] {
-  const produtos = repositorioProdutos.listar();
+export async function obterCategorias(): Promise<string[]> {
+  const produtos = await repositorioProdutos.listar();
   const categorias = new Set(produtos.map(p => p.category));
   return Array.from(categorias).sort();
 }
@@ -74,8 +45,8 @@ export function obterCategorias(): string[] {
 /**
  * Obtém estatísticas dos produtos
  */
-export function obterEstatisticas() {
-  const produtos = repositorioProdutos.listar();
+export async function obterEstatisticas() {
+  const produtos = await repositorioProdutos.listar();
 
   if (produtos.length === 0) {
     return {

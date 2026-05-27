@@ -8,10 +8,5 @@ npm-debug.log
 .git
 .gitignore
 README.md
-src
-public
-tsconfig.json
-package.json
-package-lock.json
 .eslintignore
 .eslintrc.json

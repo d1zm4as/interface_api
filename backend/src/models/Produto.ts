@@ -4,14 +4,15 @@
  */
 
 export interface Produto {
-  id: string | number;
+  id: number;
   name: string;
   description: string;
   price: number;
   category: string;
   active: boolean;
-  createdAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export type CriarProduto = Omit<Produto, 'id' | 'createdAt'>;
+export type CriarProduto = Omit<Produto, 'id' | 'createdAt' | 'updatedAt'>;
 export type AtualizarProduto = Partial<CriarProduto>;

@@ -1,7 +1,24 @@
-version: '3.8'
-
 services:
-  # Backend API
+  database:
+    image: postgres:16-alpine
+    container_name: produtos-db
+    environment:
+      POSTGRES_DB: produtos_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - produtos-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d produtos_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   backend:
     build:
       context: ./backend
@@ -13,18 +30,25 @@ services:
       NODE_ENV: production
       PORT: 3001
       CORS_ORIGIN: http://localhost:3000
-    volumes:
-      - ./backend/src:/app/src
+      DATABASE_URL: postgresql://postgres:postgres@database:5432/produtos_db?schema=public
+    depends_on:
+      database:
+        condition: service_healthy
     networks:
       - produtos-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3001/health', (res) => { if (res.statusCode !== 200) process.exit(1); res.resume(); }).on('error', () => process.exit(1))"
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 15s
 
-  # Frontend
   frontend:
     build:
       context: ./frontend
@@ -40,11 +64,20 @@ services:
     networks:
       - produtos-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000', (res) => { if (res.statusCode !== 200) process.exit(1); res.resume(); }).on('error', () => process.exit(1))"
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 10s
+
+volumes:
+  postgres_data:
 
 networks:
   produtos-network:
